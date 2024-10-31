@@ -1,0 +1,69 @@
+﻿@model ExpenseProject.Models.cate
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<style>
+body, input, label, span, button {
+    font-family: 'Poppins', sans-serif; /* Modern sans-serif font */
+}
+</style>
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="widget p-5">
+            <form asp-action="AddEdit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="cateId" value="@Model.cateId" />
+                <div class="mb-3">
+                    <div class='e-btn-group'>
+                        <input type="radio" id="radioleft" name="Type" value="expense" @(Model.Type == "expense" ? "checked" : "") />
+                        <label class="e-btn" for="radioleft">
+                            <i class="fas fa-wallet"></i>
+                            <span>Expense</span>
+                        </label>
+
+                        <input type="radio" id="radiomiddle" name="Type" value="income" @(Model.Type == "income" ? "checked" : "") />
+                        <label class="e-btn" for="radiomiddle">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Income</span>
+                        </label>
+                    </div>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <ejs-textbox id="firstname" placeholder="Title" ejs-for="Title" floatLabelType="Always"></ejs-textbox>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <ejs-textbox id="img" placeholder="icon" ejs-for="img" floatLabelType="Always"></ejs-textbox>
+                    <span asp-validation-for="img" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn-custom">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="widget h-100 d-flex justify-content-center align-items-center w-100">
+            <span class="custom-icon">
+                <i class="fa-solid fa-business-time"></i>
+            </span>
+            <span>Manage Expenses</span>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

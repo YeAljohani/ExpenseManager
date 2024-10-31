@@ -1,0 +1,112 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #12161d;
+    color: aliceblue
+}
+.e-btn-group {
+    display: flex;
+    gap: 15px; 
+    justify-content: center; 
+    padding: 20px; 
+}
+
+.e-btn {
+    background: linear-gradient(135deg, #1c1c1c, #3e3e3e); 
+    color: #00ffcc; 
+    padding: 12px 20px; 
+    border-radius: 30px; 
+    cursor: pointer; 
+    border: 2px solid transparent; 
+    font-size: 16px; 
+    text-align: center; 
+    transition: background 0.3s, transform 0.3s, border-color 0.3s; 
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2); 
+    display: flex; 
+    align-items: center;
+}
+
+    .e-btn i {
+        margin-right: 8px; 
+        font-size: 20px;
+        color: #00ffcc; 
+    }
+
+.e-btn-group input[type="radio"] {
+    display: none; 
+}
+
+    .e-btn-group input[type="radio"]:checked + label {
+        background: linear-gradient(135deg, #3e3e3e, #00cc99);
+        border: 2px solid #00ffcc;
+        transform: scale(1.05); 
+    }
+
+.e-btn-group label:hover {
+    background: linear-gradient(135deg, #333333, #4d4d4d); 
+    transform: translateY(-2px); 
+}
+.btn-custom {
+    background: linear-gradient(135deg, #6ee7b7, #34d399); 
+    color: black; 
+    padding: 12px 25px;
+    border-radius: 30px; 
+    border: none; 
+    font-size: 16px; 
+    font-weight: bold;
+    cursor: pointer; 
+    transition: background 0.3s, transform 0.3s; 
+    box-shadow: 0 4px 10px rgba(52, 211, 153, 0.5);
+    margin: 20px 0; 
+}
+
+    .btn-custom:hover {
+        background: linear-gradient(135deg, #34d399, #10b981);
+        transform: translateY(-2px); 
+    } 
+
+    .btn-custom:focus {
+        outline: none; 
+        box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.7); 
+    }
+.widget .custom-icon {
+    font-size: 100px; /* Increase the icon size */
+    color: #34d399; /* Change color as needed */
+    margin-right: 20px; /* Increase space between icon and text */
+}
+
+
+.widget span {
+    font-size: 24px; /* Increase text size */
+    font-weight: bold; /* Make the text bold for emphasis */
+}
+.widget {
+    border-radius: 1rem;
+    background-color: #1a222b;
+    display: flex; /* Ensure flex is applied */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    padding: 20px;
+}
+
+body, input, label, span, button {
+    font-family: 'Montserrat', sans-serif; /* Use Montserrat for a modern look */
+}
