@@ -9,73 +9,65 @@ using ExpenseProject.Models;
 
 namespace ExpenseProject.Controllers
 {
-    public class catesController : Controller
+    public class TransactionController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public catesController(ApplicationDbContext context)
+        public TransactionController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: cates
+        // GET: Transaction
         public async Task<IActionResult> Index()
         {
-            return View(await _context.cate.ToListAsync());
+            var applicationDbContext = _context.Transaction.Include(t => t.cate);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: cates/AddEdit
-        public IActionResult AddEdit(int id = 0)
+  
+
+        // GET: Transaction/Create
+        public IActionResult AddEdit()
         {
-            if (id == 0)
-                return View(new cate());
-            else
-                return View(_context.cate.Find(id));
-
+            ViewData["cateId"] = new SelectList(_context.cate, "cateId", "cateId");
+            return View();
         }
-
-        // POST: cates/AddEdit
+        
+        // POST: Transaction/AddEdit
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddEdit([Bind("cateId,Title,Type,img")] cate cate)
+        public async Task<IActionResult> AddEdit([Bind("TransactionId,cateId,Amount,Note,Date")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
-                if (cate.cateId == 0)
-                    _context.Add(cate);
-                else
-                    _context.Update(cate);
+                _context.Add(transaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cate);
+            ViewData["cateId"] = new SelectList(_context.cate, "cateId", "cateId", transaction.cateId);
+            return View(transaction);
         }
 
     
-        // GET: cates/Delete/5
-      
 
-        // POST: cates/Delete/5
+        // POST: Transaction/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if(_context.cate==null)
+            var transaction = await _context.Transaction.FindAsync(id);
+            if (transaction != null)
             {
-                return Problem("entity set 'ApplicationDbContext.cates' is null");
-            }
-            var cate = await _context.cate.FindAsync(id);
-            if (cate != null)
-            {
-                _context.cate.Remove(cate);
+                _context.Transaction.Remove(transaction);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-       
+     
     }
 }

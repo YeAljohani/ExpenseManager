@@ -1,47 +1,126 @@
 ﻿@model IEnumerable<ExpenseProject.Models.cate>
+<div class="fab-container">
+    <button class="fab" onclick="toggleMenu()">☰</button>
+    <div class="fab-menu" id="fab-menu">
+        <a href="/cates/Index" class="fab-item">Types</a>
+        <a href="/cates/AddEdit" class="fab-item">Add/Edit</a>
+        <a href="/cates/" class="fab-item">Reports</a>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
+<style>
+    .fab-container {
+        position: fixed; /* Fixed position for the button */
+        bottom: 30px; /* Distance from the bottom */
+        right: 30px; /* Distance from the right */
+    }
 
-@{
-    ViewData["Title"] = "Index";
-}
+    .fab {
+        background-color: aquamarine; /* Button color */
+        color: white; /* Text color */
+        border: none; /* No border */
+        border-radius: 50%; /* Circular button */
+        width: 56px; /* Button size */
+        height: 56px; /* Button size */
+        font-size: 24px; /* Font size */
+        cursor: pointer; /* Pointer cursor */
+        transition: background-color 0.3s; /* Transition for hover */
+    }
 
-<h1>Index</h1>
+        .fab:hover {
+            background-color: #0056b3; /* Darker on hover */
+        }
 
-<p>
-    <a asp-action="AddEdit">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.img)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.img)
-            </td>
-            <td>
-                    <a asp-action="AddEdit" asp-route-id="@item.cateId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.cateId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.cateId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    .fab-menu {
+        display: none; /* Hidden by default */
+        flex-direction: column; /* Vertical layout */
+        position: absolute; /* Position relative to the button */
+        bottom: 70px; /* Position above the button */
+        right: 0; /* Align to the right */
+        background-color: darkslategray; /* Background for the menu */
+        border-radius: 5px; /* Rounded corners */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    }
+
+    .fab-item {
+        padding: 10px; /* Padding for items */
+        text-decoration: none; /* Remove underline */
+        color: antiquewhite; /* Text color */
+    }
+
+        .fab-item:hover {
+            background-color: beige; /* Background on hover */
+        }
+</style>
+
+<script>
+    function toggleMenu() {
+        var menu = document.getElementById("fab-menu");
+        if (menu.style.display === "none" || menu.style.display === "") {
+            menu.style.display = "flex"; // Show the menu
+        } else {
+            menu.style.display = "none"; // Hide the menu
+        }
+    }
+</script>
+<div class="row">
+    <div class="col-md-7">
+        <ejs-grid id="cate" dataSource="@Model" gridLines="None" allowSorting="true" allowPaging="true">
+            <e-grid-pagesettings pageSize="5"></e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column headerText="Category" field="TitleWithIcon"></e-grid-column>
+                <e-grid-column headerText="Type" template="#typecolumntemplate" width="150px"></e-grid-column>
+                <e-grid-column headerText="Actions" template="#actioncolumntemplate" width="100px"></e-grid-column>
+
+
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });</script>
+</div>
+
+<script id="typecolumntemplate" type="text/x-template">
+    ${if(Type=="income")}
+    <span class="badge bg-info">${Type}</span>
+    ${else}
+        <span class="badge bg-warning">${Type}</span>
+        ${/if}
+
+</script>
+<script id="actioncolumntemplate" type="text/x-template">
+    <div class="d-flex flex-row justify-content-start">
+      <a class="btn btn-sm no-a-decoration" href="/cates/AddEdit/${cateId}">
+        <i class="fa-solid fa-gears" style="color: #9f1919;"></i>
+      </a>
+      <form id="deleteForm-${cateId}" action="/cates/Delete/${cateId}" method="post" style="display: inline;">
+    @Html.AntiForgeryToken()
+        <button type="button" class="btn btn-sm btn-link no-a-decoration" onclick="confirmDelete(${cateId})">
+          <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
+        </button>
+      </form>
+    </div>
+</script>
+
+<script>
+    function confirmDelete(cateId) {
+        Swal.fire({
+            icon: "warning",
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Manually submit the form if confirmed
+                document.getElementById(`deleteForm-${cateId}`).submit();
+            }
+        });
+    }
+</script>

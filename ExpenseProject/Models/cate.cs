@@ -7,7 +7,7 @@ namespace ExpenseProject.Models
     {
         [Key]
         public int cateId { get; set; }
-        [Column(TypeName="nvarchar(50)")]
+        [Column(TypeName = "nvarchar(50)")]
         public string Title { get; set; }
         [Column(TypeName = "nvarchar(50)")]
 
@@ -17,5 +17,13 @@ namespace ExpenseProject.Models
 
         public string img { get; set; } = "";
 
+        [NotMapped]
+        public string? TitleWithIcon
+        {
+            get
+            {
+                return this.img + " " + this.Title;
+            }
+        }
     }
 }
