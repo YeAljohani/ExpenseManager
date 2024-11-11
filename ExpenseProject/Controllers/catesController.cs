@@ -24,7 +24,7 @@ namespace ExpenseProject.Controllers
             return View(await _context.cate.ToListAsync());
         }
 
-        // GET: cates/AddEdit
+        // GET: cates/AddEdits
         public IActionResult AddEdit(int id = 0)
         {
             if (id == 0)
