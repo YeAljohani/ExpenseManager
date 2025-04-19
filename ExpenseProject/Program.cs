@@ -18,7 +18,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NDaF5cWWtCf1JpRHxbf1x0ZFJMZV9bQHZPMyBoS35RckRjW3ped3FWQmBdVURy\r\n");
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBMAY9C3t2UlhhQlVMfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hTX9Sd0RjUH9ZdH1XQGJV\r\n\r\n");
 
 app.UseAuthorization();
 
