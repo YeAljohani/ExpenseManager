@@ -1,53 +1,94 @@
-﻿@model IEnumerable<ExpenseProject.Models.Transaction>
+﻿<div class="row">
+    <!-- First Box: Transactions -->
+    <div class="col-md-6">
+        <ejs-grid id="transaction" dataSource="@Model" gridLines="None" allowSorting="true" allowPaging="true">
+            <e-grid-pagesettings pageSize="5"></e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column headerText="Category" field="CategoryTitleWithIcon"></e-grid-column>
+                <e-grid-column headerText="Date" field="Date" width="110px" type="date" format="MMM-dd-yy" textAlign="Left"></e-grid-column>
+                <e-grid-column headerText="Amount" field="FormattedAmount" width="110px" textAlign="Right"></e-grid-column>
+                <e-grid-column headerText="Actions" template="#actioncolumntemplate" width="100px"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
 
-@{
-    ViewData["Title"] = "Index";
-}
+    <!-- Second Box: Icon Section (Replacing Image) -->
+    <div class="col-md-6">
+        <div class="icon-box primary-bg">
+            <i class="fa-solid fa-chart-line fa-6x text-white"></i>
+            <h3 class="mt-3 text-white">Financial Summary</h3>
+        </div>
+    </div>
+</div>
 
-<h1>Index</h1>
+<style>
+    .row {
+        display: flex;
+        align-items: stretch;
+        min-height: 350px;
+    }
 
-<p>
-    <a asp-action="AddEdit">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.cate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.cate.cateId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TransactionId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TransactionId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TransactionId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    .col-md-6 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .icon-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        padding: 30px;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .primary-bg {
+        background-color: #1b222b; /* Dark navy/charcoal color as requested */
+    }
+
+    .icon-box:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Make sure the grid takes full height */
+    #transaction {
+        height: 100%;
+    }
+</style>
+
+<script id="actioncolumntemplate" type="text/x-template">
+    <div class="d-flex flex-row justify-content-start">
+        <a class="btn btn-sm no-a-decoration" href="/Transaction/AddEdit/${TransactionId}">
+            <i class="fa-solid fa-gears" style="color: #9f1919;"></i>
+        </a>
+        <form id="deleteForm-${TransactionId}" action="/Transaction/Delete/${TransactionId}" method="post" style="display: inline;">
+    @Html.AntiForgeryToken()
+            <button type="button" class="btn btn-sm btn-link no-a-decoration" onclick="confirmDelete(${TransactionId})">
+                <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
+            </button>
+        </form>
+    </div>
+</script>
+
+<script>
+    function confirmDelete(transactionId) {
+        Swal.fire({
+            icon: "warning",
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(`deleteForm-${transactionId}`).submit();
+            }
+        });
+    }
+</script>

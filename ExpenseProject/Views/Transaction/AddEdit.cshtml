@@ -1,68 +1,63 @@
 ﻿@model ExpenseProject.Models.Transaction
-
-
-
-
 <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-6">
         <div class="widget p-5">
-        <form asp-action="AddEdit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>    
+            <form asp-action="AddEdit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="TransactionId" value="@Model.TransactionId" />
                 <div class="mb-3">
-                    <ejs-datepicker id="date" ejs-for="Date" placeholder="Date" floatLabelType="Always" format="MMM-dd-yy"></ejs-datepicker>
-                    <span asp-validation-for="Date" class="text-danger"></span>
+                    <ejs-datepicker id="date" ejs-for="Date" placeholder="Date" floatLabelType="Always" format="MM-dd-yy"></ejs-datepicker>
                 </div>
-            <div class="mb-3">
-                <label asp-for="cateId" class="control-label"></label>
-                <select asp-for="cateId" class ="form-control" asp-items="ViewBag.cateId"></select>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="Note" class="control-label"></label>
-                <input asp-for="Note" class="form-control" />
-                <span asp-validation-for="Note" class="text-danger"></span>
-            </div>
-     
-            <div class="mb-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="mb-3">
+                    <ejs-dropdownlist id="ddlCates" ejs-for="cateId" dataSource="@ViewBag.cate" placeholder="Category" floatLabelType="Always" allowFiltering="true" ignoreAccent="true" filterType="Contains">
+                        <e-dropdownlist-fields value="cateId" text="TitleWithIcon"></e-dropdownlist-fields>
+                    </ejs-dropdownlist>
+                    <span asp-validation-for="cateId" class="text-danger fs-6"></span>
+                </div>
+                <div class="mb-3">
+                    <ejs-numerictextbox id="amount" ejs-for="Amount" placeholder="Amount" floatLabelType="Always" min="0" format="c0"></ejs-numerictextbox>
+                    <span asp-validation-for="Amount" class="text-danger fs-6"></span>
+                </div>
+                <div class="mb-3">
+                    <ejs-textbox id="note" placeholder="Note" ejs-for="Note" floatLabelType="Always" multiline=true></ejs-textbox>
+                </div>
+                <ejs-button id="submit" type="submit" content="Submit" cssClass="e-success"></ejs-button>
+            </form>
         </div>
     </div>
-        <style>
-     
-            .image-section {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                max-width: 400px; /* Limit width for balance with form */
-                margin-left: 20px; /* Add space between form and image */
-            }
-
-            .styled-image {
-                width: 100%;
-                height: auto; /* Preserve aspect ratio */
-                border-radius: 15px; /* Adds subtle rounded corners */
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Adds a soft shadow */
-                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth hover transition */
-            }
-
-                .styled-image:hover {
-                    transform: scale(1.03); /* Slight zoom effect on hover */
-                    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow on hover */
-                }
-        </style>
-
-    <!-- Image Section -->
-    <div class="image-section">
-        <img src="~/img/13.png" alt="Manage Expenses Icon" class="styled-image">
+    <!-- Image Section - Slightly Smaller -->
+    <div class="col-md-6">
+        <div class="image-container">
+            <img src="~/img/13.png" alt="Manage Expenses Icon" class="styled-image">
+        </div>
     </div>
+</div>
 
+<style>
+    .row {
+        display: flex;
+        align-items: center;
+    }
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    .image-container {
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 380px; /* Smaller height than before */
+    }
+
+    .styled-image {
+        width: 85%; /* Reduced from 100% */
+        max-height: 85%; /* Reduced from 100% */
+        object-fit: contain;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+        .styled-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+</style>

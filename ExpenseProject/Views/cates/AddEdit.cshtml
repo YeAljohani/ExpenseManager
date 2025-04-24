@@ -102,7 +102,7 @@ body, input, label, span, button {
                 
                 <div class="mb-3">
                     <ejs-textbox id="firstname" placeholder="Title" ejs-for="Title" floatLabelType="Always"></ejs-textbox>
-                    <span asp-validation-for="Title" class="text-danger"></span>
+                    <span asp-validation-for="Title" class="text-danger fs-6"></span>
                 </div>
 
                 <div class="mb-3">
@@ -127,6 +127,4 @@ body, input, label, span, button {
     </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+

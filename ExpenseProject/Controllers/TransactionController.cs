@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ExpenseProject.Models;
+using Syncfusion.EJ2.Charts;
+using Syncfusion.EJ2.PdfViewer;
 
 namespace ExpenseProject.Controllers
 {
@@ -25,33 +27,33 @@ namespace ExpenseProject.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-  
-
         // GET: Transaction/Create
-        public IActionResult AddEdit()
+        public IActionResult AddEdit(int id=0)
         {
-            ViewData["cateId"] = new SelectList(_context.cate, "cateId", "cateId");
-            return View();
+            PopulateCategories();
+            if (id == 0)
+                return View(new Transaction());
+            else
+                return View(_context.Transaction.Find(id));
         }
-        
+
         // POST: Transaction/AddEdit
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddEdit([Bind("TransactionId,cateId,Amount,Note,Date")] Transaction transaction)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(transaction);
+                if(transaction.TransactionId== 0)
+                    _context.Add(transaction);
+                else
+                    _context.Update(transaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["cateId"] = new SelectList(_context.cate, "cateId", "cateId", transaction.cateId);
+            PopulateCategories();
             return View(transaction);
         }
-
-    
 
         // POST: Transaction/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -68,6 +70,13 @@ namespace ExpenseProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-     
+        [NonAction]
+        public void PopulateCategories()
+        {
+            var CategoryCollection = _context.cate.ToList();
+            cate DefaultCategory = new cate() { cateId = 0, Title = "Choose a category" };
+            CategoryCollection.Insert(0, DefaultCategory);
+            ViewBag.cate = CategoryCollection;
+        }
     }
 }

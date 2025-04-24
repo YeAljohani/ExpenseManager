@@ -8,6 +8,7 @@ namespace ExpenseProject.Models
         [Key]
         public int cateId { get; set; }
         [Column(TypeName = "nvarchar(50)")]
+        [Required(ErrorMessage="Title is required")]
         public string Title { get; set; }
         [Column(TypeName = "nvarchar(50)")]
 
