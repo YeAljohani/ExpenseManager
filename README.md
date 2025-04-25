@@ -116,14 +116,4 @@ Gain insights into your financial health with visual representations:
 
 ---
 
-## 🔮 Future Enhancements
 
-- Add support for recurring transactions 🔄.  
-- Provide export functionality for financial data 📄.  
-- Implement multi-currency support 💱.  
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
