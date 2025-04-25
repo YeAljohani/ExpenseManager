@@ -67,7 +67,6 @@ Gain insights into your financial health with visual representations:
 - Track your remaining **Balance**.  
 - Identify spending patterns through categorized charts 📈.
 
-![Charts Overview](https://github.com/user-attachments/assets/9f05010f-def3-48b7-9abf68f33461)
 
 ---
 
