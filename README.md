@@ -34,6 +34,7 @@ Users can easily add transactions to track their earnings 💵 and spending 🛒
 Track your most recent transactions at a glance, categorized as **income** or **expenses**.
 
 ![Latest Transactions](https://github.com/user-attachments/assets/6a5b82c6-cb72-4b39-b915-cfef42559f93)
+![{A1DA863E-C241-4CE5-83A8-06F94F915F64}](https://github.com/user-attachments/assets/e811fc07-d5e1-4ed8-ba07-044d7f442644)
 
 ---
 
