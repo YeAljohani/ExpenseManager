@@ -1,6 +1,46 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    List<object> transactionItems = new List<object>()
+    {
+        new { Text = "Dashboard", Url = "/Dashboard/Index", IconCss = "fa fa-chart-line" },
+        new { Text = "Transactions", Url = "/Transaction/Index", IconCss = "fa fa-wallet" }
+    };
+
+    List<object> categoryItems = new List<object>()
+    {
+        new { Text = "Add Category", Url = "/cates/AddEdit", IconCss = "fa fa-plus-circle" },
+        new { Text = "View Categories", Url = "/cates/Index", IconCss = "fa fa-folder-open" }
+    };
 }
-<ejs-sidebar id="sidebar" width="290"></ejs-sidebar>
+
+<ejs-sidebar id="sidebar" width="290px" style="background-color: #111827; border-right: 1px solid #374151;">
+    <e-content-template>
+        <div style="padding: 20px; text-align: center;">
+            <img src="~/img/kla.png" alt="App Logo" style="width: 70px; height: 70px; margin-bottom: 10px; border-radius: 12px;" />
+            <h4 style="color: gainsboro; font-weight: 700; font-size: 18px;">EXPENSE MANAGEMENT</h4>
+        </div>
+
+        <div style="padding: 0 20px;">
+            <div style="color: #9CA3AF; font-weight: 600; font-size: 13px; letter-spacing: 1px; margin-top: 20px; margin-bottom: 10px;">TRANSACTIONS</div>
+            @foreach (var item in transactionItems)
+            {
+                <a href="@item.GetType().GetProperty("Url").GetValue(item)"
+                   style="display: flex; align-items: center; padding: 10px 12px; margin-bottom: 8px; color: #E5E7EB; text-decoration: none; font-size: 15px; border-radius: 8px; transition: 0.3s; background-color: transparent;">
+                    <i class="@item.GetType().GetProperty("IconCss").GetValue(item)"
+                       style="margin-right: 12px; font-size: 18px; color:slategray;"></i>
+                    <span>@item.GetType().GetProperty("Text").GetValue(item)</span>
+                </a>
+            }
+
+            <div style="color: #9CA3AF; font-weight: 600; font-size: 13px; letter-spacing: 1px; margin-top: 30px; margin-bottom: 10px;">CATEGORIES</div>
+            @foreach (var item in categoryItems)
+            {
+                <a href="@item.GetType().GetProperty("Url").GetValue(item)"
+                   style="display: flex; align-items: center; padding: 10px 12px; margin-bottom: 8px; color: #E5E7EB; text-decoration: none; font-size: 15px; border-radius: 8px; transition: 0.3s; background-color: transparent;">
+                    <i class="@item.GetType().GetProperty("IconCss").GetValue(item)"
+                       style="margin-right: 12px; font-size: 18px; color: #slategray;"></i>
+                    <span>@item.GetType().GetProperty("Text").GetValue(item)</span>
+                </a>
+            }
+        </div>
+    </e-content-template>
+</ejs-sidebar>

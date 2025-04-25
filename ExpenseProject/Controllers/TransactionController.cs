@@ -69,7 +69,20 @@ namespace ExpenseProject.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        public async Task<IActionResult> Search(string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
+            var searchResults = await _context.Transaction
+                .Include(t => t.cate)
+                .Where(t => t.Note.Contains(query) || t.cate.Title.Contains(query))
+                .ToListAsync();
+
+            return View("SearchResults", searchResults);
+        }
         [NonAction]
         public void PopulateCategories()
         {

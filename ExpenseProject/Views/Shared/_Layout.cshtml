@@ -4,68 +4,96 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ExpenseProject</title>
+
+    <!-- Syncfusion theme: default is dark -->
+    <link id="theme-style" rel="stylesheet" href="https://cdn.syncfusion.com/ej2/27.1.48/bootstrap5-dark.css" />
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
-
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/27.1.48/material.css" />
-    <!-- Syncfusion ASP.NET Core controls scripts -->
+
     <script src="https://cdn.syncfusion.com/ej2/27.1.48/dist/ej2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
- 
-
-    <link href="https://cdn.syncfusion.com/ej2/27.1.48/bootstrap5-dark.css
-" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;70 &display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-
     <link rel="stylesheet" href="~/ExpenseProject.styles.css" asp-append-version="true" />
 </head>
-<body class="e-bigger">
-    <partial name="_SideBar"/>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ExpenseProject</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+
+<body class="e-bigger e-dark">
+    <partial name="_SideBar" />
+
+    <nav class="navbar sticky-top shadow-sm" style="background-color: #1a222b;">
+        <div class="container-fluid py-2 px-4 d-flex justify-content-between align-items-center">
+
+            <!-- Left: Search -->
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-magnifying-glass text-white me-3"></i>
+                <input class="form-control form-control-sm bg-dark text-white border-0" style="width: 200px;" type="search" placeholder="Search transactions...">
+            </div>
+
+            <!-- Right: Action Buttons -->
+            <div class="d-flex align-items-center">
+                <!-- Transactions icon -->
+                <button class="btn btn-dark me-2">
+                    <a href="/Transaction" class="btn btn-dark me-2 text-white text-decoration-none">
+                        <i class="fa-solid fa-receipt"></i> Transactions
+                    </a>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+
+                <!-- Dark/Light Mode toggle -->
+                <button id="theme-toggle" class="btn btn-outline-light">
+                    <i class="fa-solid fa-sun"></i> Light
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="@(ViewData["isDashboard"] == null ? "col-md-10" : "col-md-12")">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="main-content">
-    <div class="container mt-5">
-        <div class="@(ViewData["isDashboard"]==null?"col-md-10":"col-md-12")">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
         </div>
     </div>
 
-    </div>
-
-   
+    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
     <ejs-scripts></ejs-scripts>
 
+    <!-- Theme Toggle Script -->
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeLink = document.getElementById('theme-style');
+        const body = document.body;
+
+        let isDark = true;
+
+        themeToggle.addEventListener('click', () => {
+            if (isDark) {
+                // Switch to light mode
+                themeLink.href = "https://cdn.syncfusion.com/ej2/27.1.48/material.css";
+                body.classList.remove('e-dark');
+                themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i> Dark';
+            } else {
+                // Switch to dark mode
+                themeLink.href = "https://cdn.syncfusion.com/ej2/27.1.48/bootstrap5-dark.css";
+                body.classList.add('e-dark');
+                themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i> Light';
+            }
+
+            isDark = !isDark;
+        });
+    </script>
 </body>
 </html>
